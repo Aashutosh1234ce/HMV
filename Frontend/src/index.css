@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Fraunces", "Playfair Display", ui-serif, Georgia, serif;
+  --font-mono: "Inter", ui-monospace, monospace;
+
+  /* Warm paper + forest green + slate blue */
+  --color-paper: #f6f1e5;
+  --color-stone: #ede6d4;
+  --color-ink: #22252a;
+  --color-ash: #5c5e55;
+  --color-gold: #c89c3e;
+  --color-rust: #d64527;
+  --color-forest: #2d4a3e;
+  --color-slate: #3a5a7a;
+
+  --shadow-soft: 0 2px 6px rgba(34, 37, 42, 0.06), 0 16px 40px -24px rgba(34, 37, 42, 0.25);
+  --shadow-lift: 0 4px 12px rgba(34, 37, 42, 0.08), 0 30px 60px -28px rgba(34, 37, 42, 0.35);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  ::selection {
+    background: var(--color-forest);
+    color: var(--color-paper);
+  }
+}
+
+/* Small-caps eyebrow label */
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--color-slate);
+}
+
+.grain-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.dropcap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 500;
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.74;
+  padding: 0.06em 0.1em 0 0;
+  color: var(--color-forest);
+}
+
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.reveal-img {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-img.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+@keyframes kenburns {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.18); }
+}
+.animate-kenburns { animation: kenburns 22s ease-in-out infinite alternate; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.6s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes scrollMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { display: flex; width: max-content; animation: scrollMarquee 32s linear infinite; }
+
+/* Accessibility — visible focus ring */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-slate);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: smooth; }
+  .animate-kenburns, .animate-fade-in, .reveal-img { animation: none; transition: none; }
+  .reveal-img { clip-path: inset(0 0 0 0); }
+  .link-underline::after { transition: none; }
+  .fade-up { opacity: 1; animation: none; }
+  .marquee-track { animation: none; }
+}
