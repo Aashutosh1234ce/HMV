@@ -182,7 +182,7 @@ export function Gallery() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/gallery")
+    fetch("https://hotel-backend.onrender.com/gallery")
       .then((res) => res.json())
       .then((data) => {
         setItems(data.map((img) => ({ id: img.id, img: img.url, height: img.height })));
@@ -376,7 +376,7 @@ export function Reservation() {
     setError("");
     
     try {
-      const response = await fetch(`http://localhost:5000/rooms/book/${form.room_type}`, {
+      const response = await fetch(`https://hotel-backend.onrender.com/rooms/book/${form.room_type}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -642,7 +642,7 @@ export function AdminPanel() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/admin/login", {
+      const res = await fetch("https://hotel-backend.onrender.com/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password })
@@ -659,17 +659,17 @@ export function AdminPanel() {
   };
 
   const fetchData = async () => {
-    const roomsRes = await fetch("http://localhost:5000/rooms").then((r) => r.json());
+    const roomsRes = await fetch("https://hotel-backend.onrender.com/rooms").then((r) => r.json());
     setRooms(roomsRes);
     
-    const galleryRes = await fetch("http://localhost:5000/gallery").then((r) => r.json());
+    const galleryRes = await fetch("https://hotel-backend.onrender.com/gallery").then((r) => r.json());
     setGallery(galleryRes);
   };
 
   const addImage = async (e) => {
     e.preventDefault();
     if (!newImgUrl) return;
-    const res = await fetch("http://localhost:5000/gallery/add", {
+    const res = await fetch("https://hotel-backend.onrender.com/gallery/add", {
       method: "POST",
       headers: adminHeaders,
       body: JSON.stringify({ url: newImgUrl, height: 600 })
@@ -684,7 +684,7 @@ export function AdminPanel() {
   };
 
   const deleteImage = async (id) => {
-    const res = await fetch(`http://localhost:5000/gallery/delete/${id}`, { 
+    const res = await fetch(`https://hotel-backend.onrender.com/gallery/delete/${id}`, { 
       method: "POST", 
       headers: adminHeaders 
     });
@@ -694,7 +694,7 @@ export function AdminPanel() {
   };
 
   const cancelBooking = async (room_number) => {
-    const res = await fetch(`http://localhost:5000/rooms/cancel/${encodeURIComponent(room_number)}`, {
+    const res = await fetch(`https://hotel-backend.onrender.com/rooms/cancel/${encodeURIComponent(room_number)}`, {
       method: "POST",
       headers: adminHeaders
     });
@@ -705,7 +705,7 @@ export function AdminPanel() {
 
   const updatePrice = async (e) => {
     e.preventDefault();
-    const res = await fetch(`http://localhost:5000/rooms/update-price/${updatePriceType}`, {
+    const res = await fetch(`https://hotel-backend.onrender.com/rooms/update-price/${updatePriceType}`, {
       method: "POST",
       headers: adminHeaders,
       body: JSON.stringify({ price: parseFloat(newPrice) })
