@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 import sqlite3
 from flask_cors import CORS
@@ -226,5 +227,4 @@ def delete_gallery_image(image_id):
     return jsonify({"message": "Image deleted successfully"})
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
